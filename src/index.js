@@ -18,18 +18,18 @@ refs.searchForm.addEventListener('submit', onSubmit);
 function onSubmit(e) {
   e.preventDefault();
 
-  const searchName = e.currentTarget;
-  console.log(searchName);
+  const searchName = e.currentTarget.elements.searchQuery.value;
+
+  refs.searchForm.reset();
+
+  if (searchName.length < 1) {
+    Notiflix.Notify.warning('Enter country, please');
+    refs.galleryContainer.innerHTML = '';
+  } else {
+    return fetchGallery(searchName)
+      .then(renderGallery)
+      .catch(error => console.log(error));
+  }
 }
-//   if (searchName.length < 1) {
-//     Notiflix.Notify.warning('Enter country, please');
-//     refs.countryList.innerHTML = '';
-//     refs.countryContainer.innerHTML = '';
-//   } else {
-//     return fetchCountry(searchName)
-//       .then(renderCountry)
-//       .catch(error => console.log(error));
-//   }
-// }
 
 new SimpleLightbox(`.gallery a`, { captionDelay: 250 });
