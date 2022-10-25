@@ -1,10 +1,9 @@
-import './styles.css';
-import Notiflix from 'notiflix';
+import './styles/styles.css';
 
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import { fetchGallery } from './js/fetch-gallery';
+import NewApiService from './js/fetch-gallery';
 import { renderGallery } from './js/render-gallery';
 
 export const refs = {
@@ -13,30 +12,31 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
-const lightbox = new SimpleLightbox('.gallery a');
+const newApiService = new NewApiService();
 
-refs.searchForm.addEventListener('submit', createGalleryItemsOnSubmit);
+refs.searchForm.addEventListener('submit', onSearch);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
-refs.galleryContainer.addEventListener(`click`, e => {
+function onSearch(e) {
   e.preventDefault();
-});
-
-function createGalleryItemsOnSubmit(e) {
-  e.preventDefault();
-
   refs.galleryContainer.innerHTML = '';
 
-  const searchName = e.currentTarget.elements.searchQuery.value.trim();
+  newApiService.query = e.currentTarget.elements.searchQuery.value.trim();
 
-  if (searchName.length < 1) {
-    Notiflix.Notify.warning('Please, add a word if you wish to find pictures');
-  } else {
-    return fetchGallery(searchName)
-      .then(renderGallery)
-      .catch(error => console.log(error));
+  if ((newApiService.query = '')) {
+    Notiflix.Notify.warning('You forgot to add text');
   }
+
+  newApiService.resetPage();
+
+  newApiService
+    .fetchGallery()
+    .then(renderGallery)
+    .catch(error => console.log(error));
 
   refs.searchForm.reset();
 
-  lightbox.refresh();
+  //   lightbox.refresh();
 }
+
+function onLoadMore() {}
