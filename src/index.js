@@ -1,4 +1,4 @@
-import './style.css';
+import './styles.css';
 import Notiflix from 'notiflix';
 
 import SimpleLightbox from 'simplelightbox';
@@ -13,7 +13,7 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
-new SimpleLightbox('.gallery a');
+const lightbox = new SimpleLightbox('.gallery a');
 
 refs.searchForm.addEventListener('submit', createGalleryItemsOnSubmit);
 
@@ -37,4 +37,6 @@ function createGalleryItemsOnSubmit(e) {
   }
 
   refs.searchForm.reset();
+
+  lightbox.refresh();
 }
