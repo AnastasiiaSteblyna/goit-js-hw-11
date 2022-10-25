@@ -1,24 +1,24 @@
-import Notiflix from 'notiflix';
 import { refs } from '../index';
 
-export function renderGallery(gallery) {
-  const markup = gallery
+export function renderGallery(data) {
+  const markup = data.hits
     .map(
-      g =>
+      hit =>
         `<div class="photo-card">
-  <img src="" alt="" loading="lazy" />
+        <a href=${hit.largeImageURL} >
+  <img src=${hit.webformatURL} alt="${hit.tags}" loading="lazy" title="${hit.tags}"/></a>
   <div class="info">
     <p class="info-item">
-      <b>Likes</b>
+      <b>Likes: ${hit.likes}</b>
     </p>
     <p class="info-item">
-      <b>Views</b>
+      <b>Views: ${hit.views}</b>
     </p>
     <p class="info-item">
-      <b>Comments</b>
+      <b>Comments: ${hit.comments}</b>
     </p>
     <p class="info-item">
-      <b>Downloads</b>
+      <b>Downloads: ${hit.downloads}</b>
     </p>
   </div>
 </div>`

@@ -1,6 +1,6 @@
 import './style.css';
-
 import Notiflix from 'notiflix';
+
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -13,23 +13,28 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
-refs.searchForm.addEventListener('submit', onSubmit);
+new SimpleLightbox('.gallery a');
 
-function onSubmit(e) {
+refs.searchForm.addEventListener('submit', createGalleryItemsOnSubmit);
+
+refs.galleryContainer.addEventListener(`click`, e => {
+  e.preventDefault();
+});
+
+function createGalleryItemsOnSubmit(e) {
   e.preventDefault();
 
-  const searchName = e.currentTarget.elements.searchQuery.value;
+  refs.galleryContainer.innerHTML = '';
 
-  refs.searchForm.reset();
+  const searchName = e.currentTarget.elements.searchQuery.value.trim();
 
   if (searchName.length < 1) {
-    Notiflix.Notify.warning('Enter country, please');
-    refs.galleryContainer.innerHTML = '';
+    Notiflix.Notify.warning('Please, add a word if you wish to find pictures');
   } else {
     return fetchGallery(searchName)
       .then(renderGallery)
       .catch(error => console.log(error));
   }
-}
 
-new SimpleLightbox(`.gallery a`, { captionDelay: 250 });
+  refs.searchForm.reset();
+}
