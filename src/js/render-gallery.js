@@ -13,17 +13,17 @@ export function renderGallery(data) {
       <img src=${hit.webformatURL} alt="${hit.tags}" loading="lazy" title="${hit.tags}"/></a>
       <div class="info">
       <p class="info-item">
-      <b>Likes ${hit.likes}</b>
-      </p>
+      <b>Likes</b>
+      ${hit.likes}</p>
       <p class="info-item">
-      <b>Views ${hit.views}</b>
-      </p>
+      <b>Views</b>
+      ${hit.views}</p>
       <p class="info-item">
-      <b>Comments ${hit.comments}</b>
-      </p>
+      <b>Comments</b>
+      ${hit.comments}</p>
       <p class="info-item">
-      <b>Downloads ${hit.downloads}</b>
-      </p>
+      <b>Downloads</b>
+      ${hit.downloads}</p>
       </div>
       </div>`
     )
