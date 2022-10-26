@@ -1,5 +1,3 @@
-// import './styles/styles.css';
-
 import ApiService from './js/fetch-gallery';
 import { renderGallery } from './js/render-gallery';
 
