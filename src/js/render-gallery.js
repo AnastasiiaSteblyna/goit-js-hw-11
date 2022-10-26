@@ -1,7 +1,11 @@
 import { refs } from '../index';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 export function renderGallery(data) {
-  const markup = data.hits
+  let lightbox = null;
+  lightbox && lightbox.destroy();
+  const markup = data
     .map(
       hit =>
         `<div class="photo-card">
@@ -25,4 +29,7 @@ export function renderGallery(data) {
     )
     .join('');
   refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
+  lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+  });
 }

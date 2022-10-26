@@ -1,9 +1,6 @@
 import './styles/styles.css';
 
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
-
-import NewApiService from './js/fetch-gallery';
+import ApiService from './js/fetch-gallery';
 import { renderGallery } from './js/render-gallery';
 
 export const refs = {
@@ -12,7 +9,7 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
-const newApiService = new NewApiService();
+const apiService = new ApiService();
 
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -21,22 +18,19 @@ function onSearch(e) {
   e.preventDefault();
   refs.galleryContainer.innerHTML = '';
 
-  newApiService.query = e.currentTarget.elements.searchQuery.value.trim();
-
-  if ((newApiService.query = '')) {
-    Notiflix.Notify.warning('You forgot to add text');
-  }
-
-  newApiService.resetPage();
-
-  newApiService
+  apiService.query = e.currentTarget.elements.searchQuery.value.trim();
+  apiService.resetPage();
+  apiService
     .fetchGallery()
     .then(renderGallery)
     .catch(error => console.log(error));
 
   refs.searchForm.reset();
-
-  //   lightbox.refresh();
 }
 
-function onLoadMore() {}
+function onLoadMore() {
+  apiService
+    .fetchGallery()
+    .then(renderGallery)
+    .catch(error => console.log(error));
+}
